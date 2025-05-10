@@ -141,9 +141,10 @@ function App() {
     friends.forEach(friend => balances[friend] = 0)
 
     expenses.forEach(expense => {
-      const amountPerPerson = expense.amount / expense.participants.length
+      // Dividir entre todos los amigos actuales
+      const amountPerPerson = expense.amount / friends.length
       balances[expense.paidBy] += expense.amount
-      expense.participants.forEach(participant => {
+      friends.forEach(participant => {
         balances[participant] -= amountPerPerson
       })
     })
@@ -342,7 +343,22 @@ function App() {
             style={{marginTop: '1.2rem', width: '100%', background: 'var(--primary-color)', color: 'white', borderRadius: '0.7rem', fontWeight: 600, fontSize: '1rem', padding: '0.7rem 0'}} 
             onClick={exportarResultadosComoImagen}
           >
-            Exportar resultados como imagen
+            Exportar como PNG
+          </button>
+          <button
+            style={{marginTop: '0.7rem', width: '100%', background: '#f87171', color: 'white', borderRadius: '0.7rem', fontWeight: 600, fontSize: '1rem', padding: '0.7rem 0', border: 'none'}}
+            onClick={() => {
+              if(window.confirm('¿Estás seguro de que quieres reiniciar todo? Se borrarán todos los datos.')) {
+                localStorage.removeItem('friends');
+                localStorage.removeItem('expenses');
+                setFriends([]);
+                setExpenses([]);
+                setNewExpense({ description: '', amount: '', paidBy: '', participants: [] });
+                setNewFriend('');
+              }
+            }}
+          >
+            Reiniciar todo
           </button>
         </div>
       )}

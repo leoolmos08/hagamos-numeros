@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import html2canvas from 'html2canvas'
 import logoExport from './assets/logo-export.png'
+import mainLogo from './assets/mainLogo.png'
 import './App.css'
 
 function formatCurrency(value) {
@@ -137,16 +138,22 @@ function App() {
   }
 
   const calculateSplits = () => {
+    // Calcular el gasto total
+    const totalExpense = expenses.reduce((sum, expense) => sum + expense.amount, 0)
+    
+    // Calcular cuánto debe pagar cada persona
+    const amountPerPerson = totalExpense / friends.length
+    
+    // Calcular el balance de cada persona
     const balances = {}
-    friends.forEach(friend => balances[friend] = 0)
-
-    expenses.forEach(expense => {
-      // Dividir entre todos los amigos actuales
-      const amountPerPerson = expense.amount / friends.length
-      balances[expense.paidBy] += expense.amount
-      friends.forEach(participant => {
-        balances[participant] -= amountPerPerson
-      })
+    friends.forEach(friend => {
+      // Sumar todos los gastos que pagó esta persona
+      const paidAmount = expenses
+        .filter(expense => expense.paidBy === friend)
+        .reduce((sum, expense) => sum + expense.amount, 0)
+      
+      // El balance es lo que pagó menos lo que debería pagar
+      balances[friend] = paidAmount - amountPerPerson
     })
 
     return balances
@@ -155,28 +162,37 @@ function App() {
   const getSettlements = () => {
     const balances = calculateSplits()
     const settlements = []
-    const debtors = Object.entries(balances)
-      .filter(([_, balance]) => balance < 0)
-      .sort((a, b) => a[1] - b[1])
-    const creditors = Object.entries(balances)
-      .filter(([_, balance]) => balance > 0)
-      .sort((a, b) => b[1] - a[1])
+    
+    // Convertir balances a arrays mutables
+    let debtors = Object.entries(balances)
+      .filter(([_, balance]) => balance < -1)
+      .map(([name, balance]) => ({ name, balance }))
+      .sort((a, b) => a.balance - b.balance)
+    let creditors = Object.entries(balances)
+      .filter(([_, balance]) => balance > 1)
+      .map(([name, balance]) => ({ name, balance }))
+      .sort((a, b) => b.balance - a.balance)
 
-    debtors.forEach(([debtor, debt]) => {
-      let remainingDebt = Math.abs(debt)
-      creditors.forEach(([creditor, credit]) => {
-        if (remainingDebt > 0 && credit > 0) {
-          const amount = Math.min(remainingDebt, credit)
-          settlements.push({
-            from: debtor,
-            to: creditor,
-            amount: amount.toLocaleString('es-CL', { style: 'currency', currency: 'CLP', minimumFractionDigits: 0 })
-          })
-          remainingDebt -= amount
-        }
+    while (debtors.length && creditors.length) {
+      let debtor = debtors[0]
+      let creditor = creditors[0]
+      const amount = Math.min(Math.abs(debtor.balance), creditor.balance)
+      if (amount < 1) break // Evitar pagos insignificantes
+      settlements.push({
+        from: debtor.name,
+        to: creditor.name,
+        amount: formatCurrency(amount)
       })
-    })
-
+      // Actualizar balances
+      debtor.balance += amount
+      creditor.balance -= amount
+      // Eliminar si ya está saldado
+      if (Math.abs(debtor.balance) < 1) debtors.shift()
+      if (creditor.balance < 1) creditors.shift()
+      // Reordenar
+      debtors.sort((a, b) => a.balance - b.balance)
+      creditors.sort((a, b) => b.balance - a.balance)
+    }
     return settlements
   }
 
@@ -210,7 +226,9 @@ function App() {
       {toast.show && (
         <div className="toast-error">{toast.message}</div>
       )}
-      <h1 style={{textAlign: 'center', fontWeight: 800, fontSize: '2.1rem', color: '#334155', marginBottom: '2.2rem'}}>Cuentas claras</h1>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '2rem'}}>
+        <img src={mainLogo} alt="Logo Hagamos Números" style={{width: '90%', maxWidth: 400, display: 'block', margin: '2.5rem auto 0 auto', height: 'auto'}} />
+      </div>
       <div className="section">
         <h2>Agregar Amigos</h2>
         <div className="input-group">
@@ -301,6 +319,11 @@ function App() {
       {expenses.length > 0 && (
         <div className="section">
           <h2>Gastos Registrados</h2>
+          {friends.length > 0 && (
+            <div style={{color: '#64748b', fontWeight: 300, fontSize: '0.9rem', marginTop: '-1.2rem', marginBottom: '1rem'}}>
+              Cada uno paga: {formatCurrency(expenses.reduce((sum, e) => sum + e.amount, 0) / friends.length)}
+            </div>
+          )}
           <div className="expenses-list">
             {expenses.map((expense) => (
               <div key={expense.id} className="expense-item">

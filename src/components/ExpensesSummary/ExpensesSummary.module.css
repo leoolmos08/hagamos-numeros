@@ -1,0 +1,24 @@
+.expenses-summary {
+  color: #64748b;
+  font-weight: 300;
+  font-size: 0.9rem;
+  margin-top: -1.2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.summary-item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.summary-item span:first-child {
+  color: #94a3b8;
+}
+
+.summary-item span:last-child {
+  font-weight: 500;
+  color: #334155;
+} 

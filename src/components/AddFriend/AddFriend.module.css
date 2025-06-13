@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.input {
+  flex: 1;
+  padding: 0.7rem;
+  border-radius: 0.7rem;
+  border: 1px solid #e5e7eb;
+  font-size: 1rem;
+}
+
+.button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1.5rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.button:hover {
+  opacity: 0.9;
+} 

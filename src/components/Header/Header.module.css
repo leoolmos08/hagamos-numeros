@@ -1,0 +1,28 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.logo {
+  width: 90%;
+  max-width: 400px;
+  display: block;
+  margin: 2.5rem auto 0 auto;
+  height: auto;
+}
+
+.title {
+  font-size: 2rem;
+  color: #1e293b;
+  margin: 1rem 0 0.5rem;
+  font-weight: 600;
+}
+
+.subtitle {
+  color: #64748b;
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 300;
+} 

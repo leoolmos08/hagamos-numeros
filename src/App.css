@@ -404,3 +404,38 @@ button:active {
   z-index: 9999;
   animation: fadeIn 0.3s;
 }
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  margin-left: 70px; /* Espacio para el botón hamburguesa */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 80px; /* Espacio para el header */
+}
+
+/* Ajustes para el header */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajustes para las secciones */
+.section {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

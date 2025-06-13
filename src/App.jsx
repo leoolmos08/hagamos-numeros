@@ -14,10 +14,21 @@ import { formatCurrency } from './utils/calculations'
 import FriendsManager from './components/FriendsManager/FriendsManager'
 import ExpensesManager from './components/ExpensesManager/ExpensesManager'
 import ExportManager from './components/ExportManager/ExportManager'
+import SideMenu from './components/SideMenu/SideMenu'
 
 function App() {
   const [toast, setToast] = useState({ show: false, message: '' })
+  const [activeSection, setActiveSection] = useState('group-division')
   const resultadosRef = React.useRef(null)
+
+  const sections = [
+    {
+      id: 'group-division',
+      name: 'División en grupo',
+      icon: ''
+    }
+    // Aquí se pueden agregar más secciones en el futuro
+  ]
 
   const showToast = (message) => {
     setToast({ show: true, message })
@@ -63,59 +74,77 @@ function App() {
     }
   }
 
-  return (
-    <div className="container">
-      <Toast show={toast.show} message={toast.message} />
-      <Header />
+  const renderSection = () => {
+    switch (activeSection) {
+      case 'group-division':
+        return (
+          <>
+            <div className="section">
+              <h2>Agregar Amigos</h2>
+              <AddFriend newFriend={newFriend} setNewFriend={setNewFriend} addFriend={addFriend} />
+              <FriendsList friends={friends} removeFriend={removeFriend} />
+            </div>
 
-      <div className="section">
-        <h2>Agregar Amigos</h2>
-        <AddFriend newFriend={newFriend} setNewFriend={setNewFriend} addFriend={addFriend} />
-        <FriendsList friends={friends} removeFriend={removeFriend} />
-      </div>
-
-      <div className="section">
-        <h2>Agregar Gasto</h2>
-        <ExpenseForm
-          newExpense={newExpense}
-          setNewExpense={setNewExpense}
-          friends={friends}
-          addExpense={handleAddExpense}
-          formatCurrency={formatCurrency}
-          handleAmountChange={handleAmountChange}
-          showExcludeList={showExcludeList}
-          setShowExcludeList={setShowExcludeList}
-        />
-      </div>
-
-      {expenses.length > 0 && (
-        <div className="section">
-          <h2>Gastos Registrados</h2>
-          <ExpensesSummary expenses={expenses} friends={friends} />
-          <div className="expenses-list">
-            {expenses.map((expense) => (
-              <ExpenseCard
-                key={expense.id}
-                expense={expense}
+            <div className="section">
+              <h2>Agregar Gasto</h2>
+              <ExpenseForm
+                newExpense={newExpense}
+                setNewExpense={setNewExpense}
                 friends={friends}
-                removeExpense={removeExpense}
+                addExpense={handleAddExpense}
                 formatCurrency={formatCurrency}
+                handleAmountChange={handleAmountChange}
+                showExcludeList={showExcludeList}
+                setShowExcludeList={setShowExcludeList}
               />
-            ))}
-          </div>
-        </div>
-      )}
+            </div>
 
-      {settlements.length > 0 && (
-        <div className="section" ref={resultadosRef}>
-          <h2>Resultados</h2>
-          <SettlementsList settlements={settlements} />
-          <ExportButton onClick={exportarResultadosComoImagen} />
-          <ResetButton onReset={handleReset} />
-        </div>
-      )}
+            {expenses.length > 0 && (
+              <div className="section">
+                <h2>Gastos Registrados</h2>
+                <ExpensesSummary expenses={expenses} friends={friends} />
+                <div className="expenses-list">
+                  {expenses.map((expense) => (
+                    <ExpenseCard
+                      key={expense.id}
+                      expense={expense}
+                      friends={friends}
+                      removeExpense={removeExpense}
+                      formatCurrency={formatCurrency}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
 
-      <ExportPreview />
+            {settlements.length > 0 && (
+              <div className="section" ref={resultadosRef}>
+                <h2>Resultados</h2>
+                <SettlementsList settlements={settlements} />
+                <ExportButton onClick={exportarResultadosComoImagen} />
+                <ResetButton onReset={handleReset} />
+              </div>
+            )}
+          </>
+        )
+      default:
+        return null
+    }
+  }
+
+  return (
+    <div className="app-container">
+      <SideMenu 
+        sections={sections}
+        activeSection={activeSection}
+        onSectionChange={setActiveSection}
+      />
+      <div className="main-content">
+        <Toast show={toast.show} message={toast.message} />
+        <Header />
+        {renderSection()}
+        <ExportPreview />
+      </div>
     </div>
   )
 }

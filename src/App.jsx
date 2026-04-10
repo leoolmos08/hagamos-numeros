@@ -14,6 +14,7 @@ import { formatCurrency } from './utils/calculations'
 import FriendsManager from './components/FriendsManager/FriendsManager'
 import ExpensesManager from './components/ExpensesManager/ExpensesManager'
 import ExportManager from './components/ExportManager/ExportManager'
+import Footer from './components/Footer/Footer'
 
 function App() {
   const [toast, setToast] = useState({ show: false, message: '' })
@@ -116,6 +117,8 @@ function App() {
       )}
 
       <ExportPreview />
+      
+      <Footer />
     </div>
   )
 }

@@ -1,6 +1,6 @@
 ---
 name: web
-description: Implementa tareas de frontend web (React y TypeScript) en una rama propia y abre un PR. Usalo para Issues con la etiqueta area:web.
+description: Implementa tareas de frontend web (React, con TypeScript o JavaScript según el CLAUDE.md del repo) en una rama propia y abre un PR. Usalo para Issues con la etiqueta area:web.
 tools: Read, Write, Edit, Grep, Glob, Bash
 model: sonnet
 isolation: worktree

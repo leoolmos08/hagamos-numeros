@@ -1,0 +1,28 @@
+name: User story
+description: Funcionalidad nueva
+labels: ["tipo:us", "estado:nuevo"]
+body:
+  - type: input
+    id: titulo
+    attributes:
+      label: Qué quiere lograr el usuario
+      placeholder: "Como ... quiero ... para ..."
+    validations:
+      required: true
+  - type: textarea
+    id: criterios
+    attributes:
+      label: Criterios de aceptación
+      placeholder: "- [ ] ...\n- [ ] ..."
+    validations:
+      required: true
+  - type: textarea
+    id: evidencia
+    attributes:
+      label: Capturas o diseño
+      description: Arrastrá imágenes o pegá un link. Si no hay, escribí "sin evidencia".
+  - type: textarea
+    id: fuera
+    attributes:
+      label: Fuera de alcance
+      description: Qué NO hay que tocar

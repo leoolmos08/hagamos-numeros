@@ -39,11 +39,11 @@ export const getSettlements = (expenses, friends) => {
   const settlements = []
   
   let debtors = Object.entries(balances)
-    .filter(([_, balance]) => balance < -1)
+    .filter(([, balance]) => balance < -1)
     .map(([name, balance]) => ({ name, balance }))
     .sort((a, b) => a.balance - b.balance)
   let creditors = Object.entries(balances)
-    .filter(([_, balance]) => balance > 1)
+    .filter(([, balance]) => balance > 1)
     .map(([name, balance]) => ({ name, balance }))
     .sort((a, b) => b.balance - a.balance)
 
@@ -65,4 +65,16 @@ export const getSettlements = (expenses, friends) => {
     creditors.sort((a, b) => b.balance - a.balance)
   }
   return settlements
+}
+
+export const formatSettlementsMessage = (settlements) => {
+  const lines = settlements.map(({ from, to, amount }) => `• ${from} → ${to}: *${amount}*`)
+  return [
+    '🧾 *Hagamos Números*',
+    '',
+    '*Quién le paga a quién*',
+    ...lines,
+    '',
+    'https://hagamosnumeros.com/'
+  ].join('\n')
 } 

@@ -16,7 +16,7 @@ Diff de la rama, Issue de origen y resultado del `revisor`.
 <2 a 4 viñetas, en lenguaje de producto>
 
 ## Por qué
-Cierra #<número del Issue>. <una línea de contexto>
+Closes #<número del Issue>. <una línea de contexto>
 
 ## Cómo probarlo
 1. <paso>
@@ -35,4 +35,5 @@ Cierra #<número del Issue>. <una línea de contexto>
 ## Reglas
 - Los pasos de prueba son para una persona con un teléfono o un navegador, no para un desarrollador.
 - Informar el resultado real de lint, tests y build; "no corrido" es una respuesta válida.
+- Escribir `Closes #<número>` en inglés: GitHub no reconoce "Cierra" y el Issue no se cerraría al mergear.
 - No listar archivos uno por uno: el diff ya lo hace.

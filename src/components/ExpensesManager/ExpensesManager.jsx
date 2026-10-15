@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { formatCurrency, getSettlements } from '../../utils/calculations'
+import { getSettlements } from '../../utils/calculations'
 
 const ExpensesManager = ({ friends }) => {
   const [expenses, setExpenses] = useState(() => {

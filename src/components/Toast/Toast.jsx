@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Toast = ({ message, show }) => {
+const Toast = ({ message, show, type = 'error' }) => {
   if (!show) return null
 
   return (
-    <div className="toast-error">
+    <div className={type === 'success' ? 'toast-error toast-success' : 'toast-error'}>
       {message}
     </div>
   )

@@ -10,19 +10,18 @@ import Header from './components/Header/Header'
 import ExpensesSummary from './components/ExpensesSummary/ExpensesSummary'
 import ExportButton from './components/ExportButton/ExportButton'
 import ResetButton from './components/ResetButton/ResetButton'
-import { formatCurrency } from './utils/calculations'
+import { formatCurrency, formatSettlementsMessage } from './utils/calculations'
 import FriendsManager from './components/FriendsManager/FriendsManager'
 import ExpensesManager from './components/ExpensesManager/ExpensesManager'
-import ExportManager from './components/ExportManager/ExportManager'
 import Footer from './components/Footer/Footer'
 
 function App() {
-  const [toast, setToast] = useState({ show: false, message: '' })
+  const [toast, setToast] = useState({ show: false, message: '', type: 'error' })
   const resultadosRef = React.useRef(null)
 
-  const showToast = (message) => {
-    setToast({ show: true, message })
-    setTimeout(() => setToast({ show: false, message: '' }), 2500)
+  const showToast = (message, type = 'error') => {
+    setToast({ show: true, message, type })
+    setTimeout(() => setToast({ show: false, message: '', type: 'error' }), 2500)
   }
 
   const {
@@ -45,10 +44,14 @@ function App() {
     settlements
   } = ExpensesManager({ friends })
 
-  const {
-    exportarResultadosComoImagen,
-    ExportPreview
-  } = ExportManager({ settlements })
+  const copiarResultados = async () => {
+    try {
+      await navigator.clipboard.writeText(formatSettlementsMessage(settlements))
+      showToast('Copiado', 'success')
+    } catch {
+      showToast('No se pudo copiar. Tu navegador no permite acceder al portapapeles.')
+    }
+  }
 
   const handleReset = () => {
     if(window.confirm('¿Estás seguro de que quieres reiniciar todo? Se borrarán todos los datos.')) {
@@ -66,7 +69,7 @@ function App() {
 
   return (
     <div className="container">
-      <Toast show={toast.show} message={toast.message} />
+      <Toast show={toast.show} message={toast.message} type={toast.type} />
       <Header />
 
       <div className="section">
@@ -98,7 +101,6 @@ function App() {
               <ExpenseCard
                 key={expense.id}
                 expense={expense}
-                friends={friends}
                 removeExpense={removeExpense}
                 formatCurrency={formatCurrency}
               />
@@ -111,13 +113,13 @@ function App() {
         <div className="section" ref={resultadosRef}>
           <h2>Resultados</h2>
           <SettlementsList settlements={settlements} />
-          <ExportButton onClick={exportarResultadosComoImagen} />
-          <ResetButton onReset={handleReset} />
+          <div className="results-actions">
+            <ExportButton onClick={copiarResultados} />
+            <ResetButton onReset={handleReset} />
+          </div>
         </div>
       )}
 
-      <ExportPreview />
-      
       <Footer />
     </div>
   )

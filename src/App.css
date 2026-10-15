@@ -404,3 +404,17 @@ button:active {
   z-index: 9999;
   animation: fadeIn 0.3s;
 }
+
+.results-actions {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-top: 1.2rem;
+}
+
+.toast-success {
+  background: #f0fdf4;
+  color: #15803d;
+  border-color: #bbf7d0;
+  box-shadow: 0 2px 12px 0 rgba(21,128,61,0.08);
+}

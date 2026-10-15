@@ -1,10 +1,6 @@
 import React from 'react'
-import { formatCurrency } from '../../utils/calculations'
 
-const ExpenseCard = ({ expense, friends, removeExpense, formatCurrency }) => {
-  const participants = friends.filter(f => !(expense.excluded || []).includes(f))
-  const amountPerPerson = participants.length > 0 ? Math.round(expense.amount / participants.length) : 0
-  const excluded = (expense.excluded || []).length > 0 ? (expense.excluded || []) : []
+const ExpenseCard = ({ expense, removeExpense, formatCurrency }) => {
 
   return (
     <div className="expense-item">

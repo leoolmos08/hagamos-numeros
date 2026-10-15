@@ -1,17 +1,33 @@
 .button {
-  margin-top: 1.2rem;
-  width: 100%;
-  background: var(--primary-color);
-  color: white;
-  border-radius: 0.7rem;
-  font-weight: 600;
-  font-size: 1rem;
-  padding: 0.7rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
   border: none;
+  padding: 0.25rem;
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
-.button:hover {
-  opacity: 0.9;
-} 
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.button:hover .icon {
+  background: var(--primary-hover);
+}
+
+.button:active .icon {
+  transform: scale(0.95);
+}

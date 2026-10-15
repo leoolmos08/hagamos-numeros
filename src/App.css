@@ -405,6 +405,13 @@ button:active {
   animation: fadeIn 0.3s;
 }
 
+.results-actions {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-top: 1.2rem;
+}
+
 .toast-success {
   background: #f0fdf4;
   color: #15803d;

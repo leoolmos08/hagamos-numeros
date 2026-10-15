@@ -113,8 +113,10 @@ function App() {
         <div className="section" ref={resultadosRef}>
           <h2>Resultados</h2>
           <SettlementsList settlements={settlements} />
-          <ExportButton onClick={copiarResultados} />
-          <ResetButton onReset={handleReset} />
+          <div className="results-actions">
+            <ExportButton onClick={copiarResultados} />
+            <ResetButton onReset={handleReset} />
+          </div>
         </div>
       )}
 

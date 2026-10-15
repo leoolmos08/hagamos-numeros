@@ -101,7 +101,6 @@ function App() {
               <ExpenseCard
                 key={expense.id}
                 expense={expense}
-                friends={friends}
                 removeExpense={removeExpense}
                 formatCurrency={formatCurrency}
               />

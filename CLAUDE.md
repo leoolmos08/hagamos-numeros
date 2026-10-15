@@ -31,5 +31,6 @@ App web (PWA) para repartir gastos entre amigos: se cargan amigos y gastos, y la
 - Antes de abrir el PR deben pasar `npm run lint` y `npm run build`, y hay que correr el agente `revisor`.
 - Preguntar antes de agregar dependencias, cambiar la estructura de carpetas, borrar archivos o cambiar las claves de localStorage.
 - Si falta información, comentar en el Issue y poner la etiqueta `necesita-decision`; no adivinar.
-- Nunca hacer merge ni push a `main`: el merge lo hace el dueño del proyecto.
-- Cada cambio de estado se refleja en las etiquetas `estado:*` del Issue, con un comentario breve.
+- Nunca hacer merge ni push a `main`, ni cerrar Issues a mano: el merge lo hace el dueño del proyecto, aunque tu sesión tenga permiso técnico para hacerlo.
+- Cada cambio de estado se refleja en las etiquetas `estado:*` del Issue, con un comentario breve. Al cambiar de estado se quita la etiqueta anterior: queda una sola.
+- Al abrir el PR, la descripción lleva `Closes #<número>`; así el Issue se cierra solo cuando el dueño mergea.

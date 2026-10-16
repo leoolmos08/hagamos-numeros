@@ -275,6 +275,17 @@ button:active {
 }
 
 /* Animaciones */
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -390,7 +401,7 @@ button:active {
 
 .toast-error {
   position: fixed;
-  top: 1.2rem;
+  bottom: calc(1.5rem + env(safe-area-inset-bottom));
   left: 50%;
   transform: translateX(-50%);
   background: #fff1f2;
@@ -402,7 +413,7 @@ button:active {
   font-weight: 500;
   box-shadow: 0 2px 12px 0 rgba(185,28,28,0.08);
   z-index: 9999;
-  animation: fadeIn 0.3s;
+  animation: toastIn 0.3s;
 }
 
 .results-actions {

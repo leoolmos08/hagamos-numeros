@@ -338,7 +338,6 @@ button:active {
   }
 
   .toast-error {
-    top: 0.7rem;
     font-size: 0.97rem;
     padding: 0.6rem 1rem;
   }

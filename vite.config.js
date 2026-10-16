@@ -8,6 +8,10 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      injectRegister: false,
+      workbox: {
+        cleanupOutdatedCaches: true
+      },
       includeAssets: ['favicon.png'],
       manifest: {
         name: 'Hagamos números',
